@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(targets = "net/minecraft/block/BedBlock")
+@Mixin(BedBlock.class)
 public class BedBlockMixin {
 
 	@Inject(method = "onUse", at = @At("HEAD"))
@@ -32,8 +32,11 @@ public class BedBlockMixin {
 			return;
 		}
 
-		if (!notSafe(state,world,pos,player))
+		if (!notSafe(state,world,pos,player)) {
+			System.out.println("A");
 			return;
+		}
+		System.out.println("B");
 
 		Vec3d vec3d = Vec3d.ofBottomCenter(pos);
 		List<HostileEntity> list = world.getEntitiesByClass(
