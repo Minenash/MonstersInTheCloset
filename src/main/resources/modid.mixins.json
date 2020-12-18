@@ -4,9 +4,13 @@
   "package": "net.fabricmc.example.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BedBlockMixin"
   ],
   "client": [
-    "ExampleMixin"
+    "ClientPlayerEntityMixin"
+  ],
+  "server": [
+    "ServerPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
