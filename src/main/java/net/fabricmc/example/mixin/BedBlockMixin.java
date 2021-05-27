@@ -33,10 +33,10 @@ public class BedBlockMixin {
 		}
 
 		if (!notSafe(state,world,pos,player)) {
-			System.out.println("A");
+//			System.out.println("A");
 			return;
 		}
-		System.out.println("B");
+//		System.out.println("B");
 
 		Vec3d vec3d = Vec3d.ofBottomCenter(pos);
 		List<HostileEntity> list = world.getEntitiesByClass(
@@ -46,9 +46,6 @@ public class BedBlockMixin {
 		);
 
 		if (!list.isEmpty()) {
-			for (HostileEntity entity : list) {
-				entity.setGlowing(true);
-			}
 			MonstersInTheCloset.duration = 60;
 			MonstersInTheCloset.list = list;
 		}
@@ -59,7 +56,7 @@ public class BedBlockMixin {
 
 		long time = world.getTimeOfDay() % 24000;
 		if (!world.getDimension().isNatural() || (time >= 0 && time <= 12000 && !world.isThundering()) ) {
-			System.out.println("Natural/Day");
+//			System.out.println("Natural/Day");
 			return false;
 		}
 
@@ -80,7 +77,7 @@ public class BedBlockMixin {
 	}
 
 	private boolean wouldSuffocate(World world, BlockPos pos) {
-		System.out.println("XYZ: " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+//		System.out.println("XYZ: " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 		return world.getBlockState(pos.up()).shouldSuffocate(world, pos.up());
 	}
 

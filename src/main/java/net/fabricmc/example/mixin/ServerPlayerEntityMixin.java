@@ -28,9 +28,9 @@ public class ServerPlayerEntityMixin {
 
 
     @Inject(method = "trySleep", at = @At("RETURN"))
-    public void highlightMobs(BlockPos pos, CallbackInfoReturnable info) {
+    public void highlightMobs(BlockPos pos, CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> info) {
         World world = MonstersInTheCloset.world;
-        Optional<PlayerEntity.SleepFailureReason> reason = ((Either<PlayerEntity.SleepFailureReason, Unit>) info.getReturnValue()).left();
+        Optional<PlayerEntity.SleepFailureReason> reason = info.getReturnValue().left();
         if (world != null && reason.isPresent() && reason.get() == PlayerEntity.SleepFailureReason.NOT_SAFE) {
 
             Vec3d vec3d = Vec3d.ofBottomCenter(pos);

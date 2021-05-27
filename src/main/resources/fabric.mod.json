@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "monsters_in_the_closet",
   "version": "${version}",
 
   "name": "Monsters in the Closet",
@@ -17,11 +17,11 @@
 
   "environment": "*",
   "mixins": [
-    "modid.mixins.json"
+    "monsters_in_the_closet.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "minecraft": "1.16.x"
+    "fabricloader": ">=0.11.3",
+    "minecraft": "1.17.x"
   }
 }
