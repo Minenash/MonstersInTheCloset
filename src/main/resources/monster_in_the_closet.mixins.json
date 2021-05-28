@@ -7,7 +7,8 @@
     "BedBlockMixin"
   ],
   "client": [
-    "ClientPlayerEntityMixin"
+    "ClientPlayerEntityMixin",
+    "MinecraftClientMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin"

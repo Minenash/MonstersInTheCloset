@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "monster-in-the-closet",
+  "id": "monster_in_the_closet",
   "version": "${version}",
 
   "name": "Monsters in the Closet",
@@ -13,11 +13,11 @@
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/monster_in_the_closet/icon.png",
 
   "environment": "*",
   "mixins": [
-    "modid.mixins.json"
+    "monster_in_the_closet.mixins.json"
   ],
 
   "depends": {
