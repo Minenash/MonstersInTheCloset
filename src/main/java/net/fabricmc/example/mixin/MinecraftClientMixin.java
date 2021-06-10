@@ -13,8 +13,10 @@ public class MinecraftClientMixin {
 
     @Inject(method = "hasOutline", at = @At("RETURN"), cancellable = true)
     private void showOutline(Entity entity, CallbackInfoReturnable<Boolean> info) {
-        if (MonstersInTheCloset.list.contains(entity))
+        if (MonstersInTheCloset.list.contains(entity)) {
+            System.out.println(entity);
             info.setReturnValue(true);
+        }
     }
 
 }
