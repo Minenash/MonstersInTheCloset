@@ -1,14 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "com.minenash.monsters_in_the_closet.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BedBlockMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "ClientPlayNetworkHandlerMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin"
