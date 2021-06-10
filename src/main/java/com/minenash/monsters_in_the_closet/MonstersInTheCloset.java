@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package com.minenash.monsters_in_the_closet;
 
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.World;

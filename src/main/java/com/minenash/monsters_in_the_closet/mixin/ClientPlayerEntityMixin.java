@@ -1,8 +1,8 @@
-package net.fabricmc.example.mixin;
+package com.minenash.monsters_in_the_closet.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.example.MonstersInTheCloset;
+import com.minenash.monsters_in_the_closet.MonstersInTheCloset;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

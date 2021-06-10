@@ -1,6 +1,6 @@
-package net.fabricmc.example.mixin;
+package com.minenash.monsters_in_the_closet.mixin;
 
-import net.fabricmc.example.MonstersInTheCloset;
+import com.minenash.monsters_in_the_closet.MonstersInTheCloset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,10 +13,8 @@ public class MinecraftClientMixin {
 
     @Inject(method = "hasOutline", at = @At("RETURN"), cancellable = true)
     private void showOutline(Entity entity, CallbackInfoReturnable<Boolean> info) {
-        if (MonstersInTheCloset.list.contains(entity)) {
-            System.out.println(entity);
+        if (MonstersInTheCloset.list.contains(entity))
             info.setReturnValue(true);
-        }
     }
 
 }
