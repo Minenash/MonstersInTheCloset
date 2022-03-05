@@ -1,5 +1,6 @@
 package com.minenash.monsters_in_the_closet.mixin;
 
+
 import com.minenash.monsters_in_the_closet.MonstersInTheCloset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -18,26 +19,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
-
-    @Shadow @Final private MinecraftClient client;
-
-    @Inject(method = "onGameMessage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/gui/hud/InGameHud;addChatMessage(Lnet/minecraft/network/MessageType;Lnet/minecraft/text/Text;Ljava/util/UUID;)V"), cancellable = true)
-    private void interceptDangerousSleepMessage(GameMessageS2CPacket packet, CallbackInfo info) {
-        if (packet.getLocation() == MessageType.GAME_INFO && packet.getMessage() instanceof TranslatableText && ((TranslatableText)packet.getMessage()).getKey().equals("block.minecraft.bed.not_safe")){
+    
+    @Shadow
+    @Final
+    private MinecraftClient client;
+    
+    @Inject(method = "onGameMessage",
+            at = @At(value = "INVOKE",
+                     shift = At.Shift.BEFORE,
+                     target = "Lnet/minecraft/client/gui/hud/InGameHud;addChatMessage(Lnet/minecraft/network/MessageType;Lnet/minecraft/text/Text;Ljava/util/UUID;)V")
+    )
+    private void interceptDangerousSleepMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
+        if (packet.getType() == MessageType.GAME_INFO && packet.getMessage() instanceof TranslatableText &&
+            "block.minecraft.bed.not_safe".equals(((TranslatableText) packet.getMessage()).getKey())) {
             Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
             List<HostileEntity> list = client.world.getEntitiesByClass(
                     HostileEntity.class,
-                    new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D, vec3d.getZ() + 8.0D),
+                    new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
+                            vec3d.getZ() + 8.0D),
                     hostileEntity -> hostileEntity.isAngryAt(client.player)
-            );
-
+                                                                      );
+            
             if (!list.isEmpty()) {
                 MonstersInTheCloset.duration = 60;
                 MonstersInTheCloset.list = list;
             }
         }
     }
-
+    
 }
