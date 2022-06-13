@@ -29,7 +29,7 @@ public class BedBlockMixin {
     @Unique
     private static BlockPos blockPos = null;
     
-    @Inject(method = "method_19283",
+    @Inject(method = "method_19283(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/entity/player/PlayerEntity$SleepFailureReason;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;sendMessage(Lnet/minecraft/text/Text;Z)V"))
     private static void thingy(PlayerEntity player, PlayerEntity.SleepFailureReason reason, CallbackInfo info) {
         if (reason != PlayerEntity.SleepFailureReason.NOT_SAFE)
@@ -50,7 +50,7 @@ public class BedBlockMixin {
                 MonstersInTheCloset.list = list;
             }
         }
-        
+
         
     }
     
