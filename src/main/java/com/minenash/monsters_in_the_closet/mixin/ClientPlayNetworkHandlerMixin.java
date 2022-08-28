@@ -35,7 +35,8 @@ public class ClientPlayNetworkHandlerMixin {
         )
     )
     private void interceptDangerousSleepMessage(Text message, boolean overlay, CallbackInfo ci) {
-        if (!(message.getContent() instanceof TranslatableTextContent && message.getString().equals("block.minecraft.bed.not_safe"))) return;
+        if (!(message.getContent() instanceof TranslatableTextContent && message.getString().equals("block.minecraft.bed.not_safe"))
+            || client.player == null || client.world == null) return;
 
         Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
         List<HostileEntity> list = client.world.getEntitiesByClass(
