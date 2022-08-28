@@ -9,7 +9,7 @@
   ],
   "client": [
     "ClientPlayerEntityMixin",
-    "ClientPlayNetworkHandlerMixin"
+    "MessageHandlerMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin"

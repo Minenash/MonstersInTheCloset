@@ -5,7 +5,6 @@ import com.minenash.monsters_in_the_closet.MonstersInTheCloset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.message.MessageHandler;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.math.Box;
@@ -21,7 +20,7 @@ import java.util.List;
 
 
 @Mixin(MessageHandler.class)
-public class ClientPlayNetworkHandlerMixin {
+public class MessageHandlerMixin {
 
     @Shadow
     @Final
