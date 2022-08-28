@@ -20,19 +20,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 
-@Mixin(ClientPlayNetworkHandler.class)
+@Mixin(MessageHandler.class)
 public class ClientPlayNetworkHandlerMixin {
     
     @Shadow
     @Final
     private MinecraftClient client;
-    
-    @Inject(method = "onGameMessage",
-            at = @At(value = "INVOKE",
-                     shift = At.Shift.BEFORE,
-                     target = "Lnet/minecraft/client/gui/hud/InGameHud;addChatMessage(Lnet/minecraft/network/MessageType;Lnet/minecraft/text/Text;Ljava/util/UUID;)V")
+
+    @Inject(
+        method = "onGameMessage",
+        at = @At(value = "INVOKE",
+            shift = At.Shift.BEFORE,
+            target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"
+        )
     )
-    private void interceptDangerousSleepMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
+    private void interceptDangerousSleepMessage(Text message, boolean overlay, CallbackInfo ci) {
         if (packet.getType() == MessageType.GAME_INFO && packet.getMessage() instanceof TranslatableText &&
             "block.minecraft.bed.not_safe".equals(((TranslatableText) packet.getMessage()).getKey())) {
             Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
