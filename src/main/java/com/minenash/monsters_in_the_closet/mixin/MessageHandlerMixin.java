@@ -26,16 +26,11 @@ public class MessageHandlerMixin {
     @Final
     private MinecraftClient client;
 
-    @Inject(
-        method = "onGameMessage",
-        at = @At(value = "INVOKE",
-            shift = At.Shift.BEFORE,
-            target = "Lnet/minecraft/client/gui/hud/ChatHud;addMessage(Lnet/minecraft/text/Text;)V"
-        )
-    )
+    @Inject(method = "onGameMessage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/gui/hud/InGameHud;setOverlayMessage(Lnet/minecraft/text/Text;Z)V"))
     private void interceptDangerousSleepMessage(Text message, boolean overlay, CallbackInfo ci) {
-        if (!(message.getContent() instanceof TranslatableTextContent && message.getString().equals("block.minecraft.bed.not_safe"))
-            || client.player == null || client.world == null) return;
+        if (client.player == null || client.world == null ||
+                !(message.getContent() instanceof TranslatableTextContent && ((TranslatableTextContent)message.getContent()).getKey().equals("block.minecraft.bed.not_safe")))
+            return;
 
         Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
         List<HostileEntity> list = client.world.getEntitiesByClass(

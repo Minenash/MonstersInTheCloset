@@ -14,6 +14,7 @@ public class MinecraftClientMixin {
 
     @Inject(method = "hasOutline", at = @At("RETURN"), cancellable = true)
     private void showOutline(Entity entity, CallbackInfoReturnable<Boolean> info) {
-        if (MonstersInTheCloset.list.contains((HostileEntity) entity)) info.setReturnValue(true);
+        if (entity instanceof HostileEntity && MonstersInTheCloset.list.contains(entity))
+            info.setReturnValue(true);
     }
 }
