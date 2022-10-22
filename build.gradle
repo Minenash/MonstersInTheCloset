@@ -79,3 +79,21 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+
+project.afterEvaluate {
+    loom {
+        runs {
+            configureEach {
+                property("fabric.development=true")
+                property("mixin.hotSwap")
+                 def mixinJarFile = configurations.compileClasspath.files {
+                     it.group == "net.fabricmc" && it.name == "sponge-mixin"
+                 }.first()
+                 vmArg("-javaagent:$mixinJarFile")
+
+                ideConfigGenerated(true)
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 package com.minenash.monsters_in_the_closet.mixin;
 
 
-import com.minenash.monsters_in_the_closet.MonstersInTheCloset;
+import com.minenash.monsters_in_the_closet.duck.MonsterInTheCloset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.mob.HostileEntity;
@@ -31,18 +31,19 @@ public class ClientPlayNetworkHandlerMixin {
                      shift = At.Shift.BEFORE,
                      target = "Lnet/minecraft/client/network/message/MessageHandler;onGameMessage(Lnet/minecraft/text/Text;Z)V")
     )
+    @SuppressWarnings("CastToIncompatibleInterface")
     private void interceptDangerousSleepMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if (packet.overlay())
-            return; // Overlay means it's displayed on the actionbar
+        if (client.player == null || client.world == null)
+            return; // Should never happen, as when processing game messages, player should be in a world.
+        
+        if (!packet.overlay())
+            return; // Overlay means it's displayed on the actionbar. The sleep message is always displayed on the action bar.
         
         if (!(packet.content().getContent() instanceof TranslatableTextContent translatableText))
             return; // If the content is not an instance of TranslatableTextContent, then return
         
         if (!"block.minecraft.bed.not_safe".equals(translatableText.getKey()))
             return; // If the translatable component is not "block.minecraft.bed.not_safe", then this isn't the game event we're looking for
-        
-        assert client.player != null : "player is never null when processing game packets, as the client is guaranteed to be in game";
-        assert client.world != null : "world is never null when processing game packets, as the client is guaranteed to be in game";
         
         Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
         List<HostileEntity> list = client.world.getEntitiesByClass(
@@ -54,9 +55,8 @@ public class ClientPlayNetworkHandlerMixin {
                 hostileEntity -> hostileEntity.isAngryAt(client.player)
                                                                   );
         
-        if (!list.isEmpty()) {
-            MonstersInTheCloset.duration = 60;
-            MonstersInTheCloset.list = list;
+        for (HostileEntity entity : list) {
+            ((MonsterInTheCloset) entity).setGlowTime(60);
         }
     }
 }

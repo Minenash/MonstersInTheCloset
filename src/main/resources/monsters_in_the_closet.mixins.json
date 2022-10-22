@@ -1,20 +1,20 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "com.minenash.monsters_in_the_closet.mixin",
-  "compatibilityLevel": "JAVA_16",
-  "mixins": [
-    "BedBlockMixin",
-    "MinecraftClientMixin"
-  ],
-  "client": [
-    "ClientPlayerEntityMixin",
-    "ClientPlayNetworkHandlerMixin"
-  ],
-  "server": [
-    "ServerPlayerEntityMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+    "required":           true,
+    "minVersion":         "0.8",
+    "package":            "com.minenash.monsters_in_the_closet.mixin",
+    "compatibilityLevel": "JAVA_16",
+    "mixins":             [
+        "BedBlockMixin",
+        "EntityMixin",
+        "MinecraftClientMixin"
+    ],
+    "client":             [
+        "ClientPlayNetworkHandlerMixin"
+    ],
+    "server":             [
+        "ServerPlayerEntityMixin"
+    ],
+    "injectors":          {
+        "defaultRequire": 1
+    }
 }

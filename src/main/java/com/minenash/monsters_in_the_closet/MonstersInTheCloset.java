@@ -1,15 +1,16 @@
 package com.minenash.monsters_in_the_closet;
 
 
-import net.minecraft.entity.mob.HostileEntity;
+import net.fabricmc.api.ModInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class MonstersInTheCloset {
-    // Client Side
-    public static int duration = -1;
+public class MonstersInTheCloset implements ModInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(MonstersInTheCloset.class);
     
-    public static List<HostileEntity> list = new ArrayList<>();
+    @Override
+    public void onInitialize() {
+        logger.info("Started Monsters In The Closet");
+    }
 }
