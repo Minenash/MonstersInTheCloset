@@ -32,21 +32,31 @@ public class ClientPlayNetworkHandlerMixin {
                      target = "Lnet/minecraft/client/network/message/MessageHandler;onGameMessage(Lnet/minecraft/text/Text;Z)V")
     )
     private void interceptDangerousSleepMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if (packet.content().getContent() instanceof TranslatableTextContent translatableText &&
-            "block.minecraft.bed.not_safe".equals(translatableText.getKey())) {
-            Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
-            List<HostileEntity> list = client.world.getEntitiesByClass(
-                    HostileEntity.class,
-                    new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
-                            vec3d.getZ() + 8.0D),
-                    hostileEntity -> hostileEntity.isAngryAt(client.player)
-                                                                      );
-            
-            if (!list.isEmpty()) {
-                MonstersInTheCloset.duration = 60;
-                MonstersInTheCloset.list = list;
-            }
+        if (packet.overlay())
+            return; // Overlay means it's displayed on the actionbar
+        
+        if (!(packet.content().getContent() instanceof TranslatableTextContent translatableText))
+            return; // If the content is not an instance of TranslatableTextContent, then return
+        
+        if (!"block.minecraft.bed.not_safe".equals(translatableText.getKey()))
+            return; // If the translatable component is not "block.minecraft.bed.not_safe", then this isn't the game event we're looking for
+        
+        assert client.player != null : "player is never null when processing game packets, as the client is guaranteed to be in game";
+        assert client.world != null : "world is never null when processing game packets, as the client is guaranteed to be in game";
+        
+        Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
+        List<HostileEntity> list = client.world.getEntitiesByClass(
+                HostileEntity.class,
+                new Box(
+                        vec3d.add(-8.0, -5.0, -8.0),
+                        vec3d.add(8.0, 5.0, 8.0)
+                ),
+                hostileEntity -> hostileEntity.isAngryAt(client.player)
+                                                                  );
+        
+        if (!list.isEmpty()) {
+            MonstersInTheCloset.duration = 60;
+            MonstersInTheCloset.list = list;
         }
     }
-    
 }

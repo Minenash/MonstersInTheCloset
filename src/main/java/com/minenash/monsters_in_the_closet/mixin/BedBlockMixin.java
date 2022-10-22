@@ -31,7 +31,7 @@ public class BedBlockMixin {
     
     @Inject(method = "method_19283",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;sendMessage(Lnet/minecraft/text/Text;Z)V"))
-    private static void thingy(PlayerEntity player, PlayerEntity.SleepFailureReason reason, CallbackInfo info) {
+    private static void trySleepButEjected(PlayerEntity player, PlayerEntity.SleepFailureReason reason, CallbackInfo info) {
         if (reason != PlayerEntity.SleepFailureReason.NOT_SAFE)
             return;
         
