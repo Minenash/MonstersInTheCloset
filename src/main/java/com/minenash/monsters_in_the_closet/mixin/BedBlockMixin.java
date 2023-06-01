@@ -38,12 +38,12 @@ public class BedBlockMixin {
         
         if (blockPos != null) {
             Vec3d vec3d = Vec3d.ofBottomCenter(blockPos);
-            List<HostileEntity> list = player.world.getEntitiesByClass(
+            List<HostileEntity> list = player.getWorld().getEntitiesByClass(
                     HostileEntity.class,
                     new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
                             vec3d.getZ() + 8.0D),
                     (hostileEntity) -> hostileEntity.isAngryAt(player)
-                                                                      );
+            );
             
             if (!list.isEmpty()) {
                 MonstersInTheCloset.duration = 60;
