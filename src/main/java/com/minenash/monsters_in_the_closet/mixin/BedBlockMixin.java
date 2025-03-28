@@ -6,6 +6,7 @@ import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -36,13 +37,13 @@ public class BedBlockMixin {
             return;
         
         
-        if (blockPos != null) {
+        if (blockPos != null && player instanceof ServerPlayerEntity spe) {
             Vec3d vec3d = Vec3d.ofBottomCenter(blockPos);
             List<HostileEntity> list = player.getWorld().getEntitiesByClass(
                     HostileEntity.class,
                     new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
                             vec3d.getZ() + 8.0D),
-                    (hostileEntity) -> hostileEntity.isAngryAt(player)
+                    (hostileEntity) -> hostileEntity.isAngryAt(spe.getServerWorld(), spe)
             );
             
             if (!list.isEmpty()) {

@@ -35,14 +35,16 @@ public abstract class ServerPlayerEntityMixin extends Entity {
     @Inject(method = "trySleep", at = @At("RETURN"))
     public void highlightMobs(BlockPos pos, CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> info) {
         Optional<PlayerEntity.SleepFailureReason> reason = info.getReturnValue().left();
-        if (getWorld() != null && reason.isPresent() && reason.get() == PlayerEntity.SleepFailureReason.NOT_SAFE) {
+        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+
+        if (player.getServerWorld() != null && reason.isPresent() && reason.get() == PlayerEntity.SleepFailureReason.NOT_SAFE) {
             
             Vec3d vec3d = Vec3d.ofBottomCenter(pos);
-            List<HostileEntity> list = getWorld().getEntitiesByClass(
+            List<HostileEntity> list = player.getServerWorld().getEntitiesByClass(
                     HostileEntity.class,
                     new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
                             vec3d.getZ() + 8.0D),
-                    (hostileEntity) -> hostileEntity.isAngryAt((PlayerEntity) (Object) this)
+                    (hostileEntity) -> hostileEntity.isAngryAt(player.getServerWorld(), player)
             );
             
             for (HostileEntity entity : list)

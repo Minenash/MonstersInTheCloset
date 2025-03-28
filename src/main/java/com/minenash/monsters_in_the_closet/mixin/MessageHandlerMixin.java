@@ -33,11 +33,10 @@ public class MessageHandlerMixin {
             return;
 
         Vec3d vec3d = Vec3d.ofBottomCenter(client.player.getBlockPos());
-        List<HostileEntity> list = client.world.getEntitiesByClass(
+        List<HostileEntity> list = client.world.getNonSpectatingEntities(
             HostileEntity.class,
             new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
-                vec3d.getZ() + 8.0D),
-            hostileEntity -> hostileEntity.isAngryAt(client.player));
+                vec3d.getZ() + 8.0D));
 
         if (!list.isEmpty()) {
             MonstersInTheCloset.duration = 60;
