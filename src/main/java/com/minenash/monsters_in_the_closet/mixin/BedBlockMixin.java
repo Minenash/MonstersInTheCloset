@@ -43,7 +43,7 @@ public class BedBlockMixin {
                     HostileEntity.class,
                     new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
                             vec3d.getZ() + 8.0D),
-                    (hostileEntity) -> hostileEntity.isAngryAt(spe.getServerWorld(), spe)
+                    (hostileEntity) -> hostileEntity.isAngryAt(spe.getWorld(), spe)
             );
             
             if (!list.isEmpty()) {

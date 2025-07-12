@@ -11,17 +11,15 @@
   "contact": {
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-
   "license": "MIT",
   "icon": "assets/modid/icon.png",
-
   "environment": "*",
   "mixins": [
     "monsters_in_the_closet.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.3",
-    "minecraft": ">=1.21.2"
+    "fabricloader": ">=0.16.14",
+    "minecraft": ">=1.21.7"
   }
 }
