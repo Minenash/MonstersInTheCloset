@@ -37,14 +37,14 @@ public abstract class ServerPlayerEntityMixin extends Entity {
         Optional<PlayerEntity.SleepFailureReason> reason = info.getReturnValue().left();
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
 
-        if (player.getServerWorld() != null && reason.isPresent() && reason.get() == PlayerEntity.SleepFailureReason.NOT_SAFE) {
+        if (player.getEntityWorld() != null && reason.isPresent() && reason.get() == PlayerEntity.SleepFailureReason.NOT_SAFE) {
             
             Vec3d vec3d = Vec3d.ofBottomCenter(pos);
-            List<HostileEntity> list = player.getServerWorld().getEntitiesByClass(
+            List<HostileEntity> list = player.getEntityWorld().getEntitiesByClass(
                     HostileEntity.class,
                     new Box(vec3d.getX() - 8.0D, vec3d.getY() - 5.0D, vec3d.getZ() - 8.0D, vec3d.getX() + 8.0D, vec3d.getY() + 5.0D,
                             vec3d.getZ() + 8.0D),
-                    (hostileEntity) -> hostileEntity.isAngryAt(player.getServerWorld(), player)
+                    (hostileEntity) -> hostileEntity.isAngryAt(player.getEntityWorld(), player)
             );
             
             for (HostileEntity entity : list)
